@@ -11,7 +11,7 @@ class Post(models.Model):
     description = models.TextField(max_length=30000)
     image = models.ImageField(null=True, blank=True,upload_to='sochial')
     create_date = models.DateTimeField(default=timezone.now)
-    likes= models.IntegerField(default=0)
+    likes= models.ManyToManyField(User,related_name = 'like_user')
     def __str__(self):
         return self.user
 
@@ -22,7 +22,7 @@ class Post(models.Model):
 class Comment(models.Model):
         post = models.ForeignKey(Post,related_name='post_comment', on_delete=models.CASCADE)
         user = models.ForeignKey(User,related_name='post_user' ,on_delete=models.CASCADE)
-        content = models.TextField(max_length=160)
+        content = models.TextField(max_length=16000)
         timestamp = models.DateTimeField(default=timezone.now)
 
         def __str__(self):
